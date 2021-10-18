@@ -7,14 +7,26 @@ namespace DIO.SERIES
     public class SerieRepositorio : IRepositorio<Serie>
     {
         private List<Serie> listaSerie = new List<Serie>();
-        public void Atualiza(int id, Serie objeto)
+        public void Atualiza(int id, Serie objeto, out bool status)
         {
-            listaSerie[id]=objeto;            
+            if(listaSerie.Count>id)
+            {
+                listaSerie[id]=objeto;
+                status = true;
+            }
+            else
+                status = false;
         }
 
-        public void Exclui(int id)
+        public void Exclui(int id, out bool status)
         {
-            listaSerie[id].Excluir();
+             if(listaSerie.Count>id)
+            {
+                listaSerie[id].Excluir();
+                status = true;
+            }
+            else
+                status = false;
         }
 
         public void Insere(Serie objeto)
@@ -34,7 +46,10 @@ namespace DIO.SERIES
 
         public Serie RetornaPorId(int id)
         {
-            return listaSerie[id];
+            if(listaSerie.Count>id)
+                return listaSerie[id];
+            else
+                return null;
         }
     }
 }
